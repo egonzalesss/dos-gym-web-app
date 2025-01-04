@@ -23,22 +23,17 @@ export class LoginComponent {
 
   constructor() {}
 
-  onLogIn(form: any): void {
+  async onLogIn(): Promise<void> {
     this.spinner.show();
-    this.authService
-      .login(this.user)
-      .then(() => {
-        this.toastR.success('', 'Login was successful!');
-        this.router.navigateByUrl('/home');
-        this.spinner.hide();
-      })
-      .catch((error) => {
-        console.log(error);
-        this.toastR.error(
-          'Credentials are invalid. Please try again.',
-          'Oops!'
-        );
-        this.spinner.hide();
-      });
+    try {
+      await this.authService.login(this.user);
+      this.spinner.hide();
+      this.toastR.success('', 'Login was successful!');
+      this.router.navigateByUrl('/home');
+    } catch (error) {
+      console.log(error);
+      this.toastR.error('Credentials are invalid. Please try again.', 'Oops!');
+      this.spinner.hide();
+    }
   }
 }
