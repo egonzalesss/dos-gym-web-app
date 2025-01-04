@@ -4,12 +4,12 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../models/User';
 import { AuthService } from '../services/auth.service';
-import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { NgxSpinnerComponent, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, NgxSpinnerModule],
+  imports: [FormsModule, NgxSpinnerComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -21,9 +21,7 @@ export class LoginComponent {
 
   user: User = new User();
 
-  constructor() {
-    // this.spinner.show();
-  }
+  constructor() {}
 
   onLogIn(form: any): void {
     this.spinner.show();
