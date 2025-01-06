@@ -3,8 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../models/User';
-import { AuthService } from '../services/auth.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -23,10 +23,11 @@ export class LoginComponent {
 
   constructor() {}
 
-  async onLogIn(): Promise<void> {
+  public async onLogIn(): Promise<void> {
     this.spinner.show();
     try {
-      await this.authService.login(this.user);
+      var authResult = await this.authService.login(this.user);
+      this.authService.setToken(await authResult.user.getIdToken());
       this.spinner.hide();
       this.toastR.success('', 'Login was successful!');
       this.router.navigateByUrl('/home');
