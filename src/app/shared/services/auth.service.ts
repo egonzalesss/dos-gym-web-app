@@ -2,7 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import {
   createUserWithEmailAndPassword,
-  updateProfile,
   signInWithEmailAndPassword,
   UserCredential,
 } from 'firebase/auth';
@@ -19,6 +18,7 @@ export class AuthService {
   constructor() {}
 
   public isAuthenticated(): boolean {
+    //todo: figure out if the decoding is still necessary because firebase provides the auth object already
     const token = localStorage.getItem('token');
     if (!token) {
       return false;
@@ -32,7 +32,7 @@ export class AuthService {
   public setToken(token: string): void {
     if (token) {
       localStorage.setItem('token', token);
-      // todo: decode token and set user in local storage
+      // todo: decode token and set user in local storage (figure out if necessary)
     }
   }
 
@@ -42,6 +42,7 @@ export class AuthService {
       user.email,
       user.password
     );
+    // below is the setting of the display name for the response.user object from UserCredentials
     // .then((response) => {
     //   updateProfile(response.user, { displayName: user.username });
     // });

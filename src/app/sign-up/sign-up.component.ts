@@ -32,6 +32,7 @@ export class SignUpComponent {
       this.toastR.success('', 'Login was successful!');
       this.router.navigateByUrl('/home');
     } catch (error) {
+      //todo: implement proper error handling because not all errors are going to be about credentials
       console.log(error);
       this.toastR.error('Credentials are invalid. Please try again.', 'Oops!');
       this.spinner.hide();
