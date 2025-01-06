@@ -4,11 +4,12 @@ import { User } from '../models/User';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, NgxSpinnerModule],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css',
 })
@@ -21,7 +22,7 @@ export class SignUpComponent {
 
   constructor() {}
 
-  onSignUp(form: any): void {
+  onSignUp(): void {
     this.authService
       .signUp(this.user)
       .then(() => {
@@ -29,22 +30,6 @@ export class SignUpComponent {
         this.router.navigateByUrl('/home');
       })
       .catch((error) => {
-        this.toastR.error(
-          'Credentials are invalid. Please try again.',
-          'Oops!'
-        );
-      });
-  }
-
-  onLogIn(form: any): void {
-    this.authService
-      .login(this.user)
-      .then(() => {
-        this.toastR.success('', 'Login was successful!');
-        this.router.navigateByUrl('/home');
-      })
-      .catch((error) => {
-        console.log(error);
         this.toastR.error(
           'Credentials are invalid. Please try again.',
           'Oops!'
